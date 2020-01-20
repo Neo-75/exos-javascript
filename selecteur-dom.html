@@ -1,0 +1,70 @@
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+</head>
+
+<body>
+    <h1>Les selecteurs du DOM</h1>
+    <ul>
+        <li>Les ID</li>
+        <li> Les balies</li>
+        <li> les classes</li>
+    </ul>
+
+    <button id="bt1">Cliquer moi</button>
+    <button id="bt2">Cliquer moi</button>
+
+
+    <a href="http://developer.mozilla.org" id="lienMDN">lien vers MDN</a>
+
+    <script>
+        var bt1 = document.querySelector("#bt1");
+
+        // code l'evenement 
+        function clickHandler(even) {
+
+            if (even.target.textContent == "Je suis cliqué") {
+                even.target.textContent = "cliquer moi";
+            } else {
+                even.target.textContent = "Je suis cliqué"
+                even.target.style.backgroundColor = "red";
+            }
+        }
+        //liaison entre la cible et le code
+        bt1.onclick = clickHandler;
+
+        bt2.onclick = clickHandler;
+
+        //cible de bt 2
+        var bt2 = document.querySelector("#bt2");
+
+        bt2.onclick = function (even) {
+            console.log(even);
+            alert("Moi aussi je suis cliqué");
+        }
+        //cible vers le lien
+
+        var lien = document.getElementById("lienMDN");
+        lien.onclick = function (){
+            bt1.setAttribute("disabled", "disabled");
+            alert("vous avez cliqué sur le lien");
+
+            return false;
+
+
+        }
+        document.querySelector("body").oncontextmenu = function () {
+            return false;
+        }
+    </script>
+
+
+
+</body>
+
+</html>

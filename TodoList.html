@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>To Do list</title>
+    <style>
+        table {
+            border-width: 1px;
+            border-style: solid;
+            border-color: black;
+            width: 20%;
+        }
+
+        td {
+            border-width: 1px;
+            border-style: solid;
+            border-color: red;
+            width: 20%;
+        }
+    </style>
+
+</head>
+
+<body>
+    <form action="" method="get" class="form-example">
+    <div>
+        <label for="Tache">Tache :</label>
+        <input type="text" id="Tache">
+
+
+        <label for="Categorie">Categorie :</label>
+        <input type="text" id="Categorie" name="Categorie">
+        <button type="submit">Valider</button>
+    </div>
+</form>
+    <table>
+        <thead>
+            <br></br>
+
+            <tr>
+                <td>Fait</td>
+                <td>Tache</td>
+                <td>Categorie</td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="checkbox" id="checkbox" checked="checked">
+                </td>
+                <td>
+
+                    Acheter du lait
+                </td>
+                <td>Perso</td>
+            </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+
+
+    <script>
+        //ciblage
+        form =document.querySelector('form')
+
+        table = document.querySelector('table');
+        tacheInput = document.querySelector('#Tache');
+        categorieInput = document.querySelector('#Categorie');
+        tacheList = document.querySelector('td');
+
+        //liste des tache
+        var TacheArray = [];
+        //liste des categories
+        var CategorieArray = [];
+
+        //remplissage de la liste des taches
+        for (item of TacheArray.children) {
+            TacheArray.push(item.innerText);
+
+        }
+        //remplissage de la liste des categories
+        for (item of CategorieArray.children) {
+            CategorieArray.push(item.innerText);
+
+        }
+        //creation d'un td
+        document.createElement("td");
+        var newItem = document.createElement("td");
+
+        //Ajout du bouton valider
+        let addButton = document.createElement("button");
+        addButton.textContent = "Valider";
+        addButton.classList.add("add");
+        newItem.appendChild(addButton);
+
+
+
+    </script>
+</body>
+
+</html>

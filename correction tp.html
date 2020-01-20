@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Liste de tâches</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+</head>
+
+<body class="container-fluid">
+
+    <div class="row justify-content-center mt-4">
+        <div class="col-md-8 bg-success">
+
+            <h1>Liste de tâche</h1>
+
+            <form class="mt-2 form-inline" method="POST">
+                <div class="form-group">
+                    <label>tâche</label>
+                    <input type="text" id="taskName" class="form-control mx-2">
+                </div>
+
+                <div class="form-group">
+                    <label>categories</label>
+                    <select id="category" class="form-control mx-2">
+                        <option value="">Choisisssez la catégorie</option>
+                        <option>Perso</option>
+                        <option>Travail</option>
+                    </select>
+
+                </div>
+                <button type="submit" class="btn btn-primary">Ajouter</button>
+            </form>
+
+            <table class="table table-bordered table-striped my-4">
+                <tr>
+                    <th>Fait</th>
+                    <th>Tâche</th>
+                    <th>Categorie</th>
+                    <th>Action</th>
+
+                </tr>
+            </table>
+
+        </div>
+        <div id="compte_a_rebours"></div>
+    </div>
+    <script type="text/javascript">
+        var compte_a_rebours = document.getElementById("compte_a_rebours");
+    </script>
+    <script>
+        //Structure de données
+        var taskList = [
+            { taskName: "Acheter du lait", category: "Perso", done: false, id: 1 },
+            { taskName: "Envoyer la facture", category: "Travail", done: false, id: 2 },
+
+        ];
+        /**************************************************
+        *Défintion des cibles du DOM
+        ***************************************************/
+
+        var tableElement = document.querySelector("table");
+        var formElement = document.querySelector("form");
+        var taskInput = document.getElementById("taskName");
+        var categoryInput = document.getElementById("category");
+
+
+        /*************************************************
+        *Gestion de l'affichage des taches dans un tableau
+        **************************************************/
+
+        //Affichage d'une ligne
+        function renderTaskRow(task) {
+            let tableRow = document.createElement("tr");
+
+            //création de la cellule "Fait"
+            let doneCell = document.createElement("td");
+            //création de la case a cocher
+            let doneChekbox = document.createElement("input");
+            doneChekbox.setAttribute("type", "Checkbox");
+            doneChekbox.setAttribute("class", "done-Checkbox");
+            if (task.done) {
+                doneChekbox.setAttribute("checked", "checked");
+            }
+            //ajout de la case a cocher a la cellule
+            doneCell.appendChild(doneChekbox);
+
+            //creation de la cellule pour le nom de la tache
+            let taskNameCell = document.createElement("td");
+            taskNameCell.textContent = task.taskName;
+
+            //creation de la cellule pour la categorie
+            let categoryCell = document.createElement("td");
+            categoryCell.textContent = task.taskName;
+            //Création de la cellule pour action
+
+            let actionCell = document.createElement("td");
+
+            //Création du bouton Supprimer
+            let deleteButton = document.createElement("button");
+            deleteButton.setAttribute("type", "button")
+            deleteButton.setAttribute("class", "btn btn-danger delete");
+            deleteButton.setAttribute("data-id", task.id);
+            deleteButton.textContent = "Supprimer"
+            //ajout du bouton a la cellule
+            actionCell.appendChild(deleteButton);
+
+
+
+            //Ajout de la cellule a la ligne
+            tableRow.appendChild(doneCell);
+            tableRow.appendChild(taskNameCell);
+            tableRow.appendChild(categoryCell);
+            tableRow.appendChild(actionCell)
+
+            //Ajout de la ligne a la table HTML (dans le Dom)
+
+            tableElement.appendChild(tableRow);
+
+            /************************************************
+            *lancement de l'application
+            *************************************************/
+
+
+        }
+
+
+        /********************************************
+            *Gestion de l'ajout des taches
+            *********************************************/
+        formElement.onsubmit = function (ev) {
+            //Empeche l'envoi duu formulaire
+            ev.preventDefault();
+
+            //Récuperer la saisie
+            let taskNameText = taskInput.value.trim();
+            let categoryNameText = categoryInput.value.trim();
+
+            //Création d'une nouvelle tache 
+            //Uniquement si la saisie n'est pas vide
+            if (taskNameText != "" && categoryNameText != "") {
+                //Création d'un objet tache 
+                let task = {
+                    taskName: taskNameText,
+                    category: categoryNameText,
+                    done: false,
+                    id: (new Date()).getTime()
+
+
+                }
+                //Ajout de la nouvelle tache a la liste
+                taskList.push(task);
+
+                //Ajouter de la tache au tableau html
+                renderTaskRow(task);
+
+                //Réinstallation du formulaire
+                taskInput.value = "";
+                categoryInput.slectedIndex = 0;
+
+                taskInput.focus();
+            }
+            return false;
+
+        }
+
+        ///********************
+        //gestion de la supression
+        //********************
+        tableElement.onclick = function (ev) {
+            let target = ev.target;
+            //uniquement si on a clique sur le bouton supprimer
+            if (target.classlist.contains("delete")) {
+                //Recuperation de l'id de la tache sur laquelle on a cliqué
+                let id = target.getAttribute("data-id");
+
+                //recheche de l'index du table
+                let index = taskList.findIndex(function (item) {
+                    return item.id == id;
+
+                });
+                //Suppression dans le tableau taskList
+                task.splice(index, 1);
+                //supression de la ligne du DOM
+                target.parentNode.parentNode.remove();
+
+            }
+
+        }
+        //Affichage de toutes les taches
+        for (task of taskList) {
+            renderTaskRow(task)
+
+        }
+
+
+
+
+    </script>
+
+
+
+
+
+</body>
